@@ -97,7 +97,13 @@ std::string formatString(const char* fmt, ...)
   char* auxPtr = NULL;
   va_list arg_list;
   va_start(arg_list, fmt);
+#ifdef _MSC_VER
+  int numChar = _vscprintf(fmt, arg_list);
+  auxPtr = (char*)malloc(numChar + 1);
+  vsprintf(auxPtr, fmt, arg_list);
+#else
   int numChar = vasprintf(&auxPtr, fmt, arg_list);
+#endif
   va_end(arg_list);
   string retString;
   if (numChar != -1)
@@ -114,7 +120,13 @@ int strPrintf(std::string& str, const char* fmt, ...)
   char* auxPtr = NULL;
   va_list arg_list;
   va_start(arg_list, fmt);
+#ifdef _MSC_VER
+  int numChars = _vscprintf(fmt, arg_list);
+  auxPtr = (char*)malloc(numChars + 1);
+  vsprintf(auxPtr, fmt, arg_list);
+#else
   int numChars = vasprintf(&auxPtr, fmt, arg_list);
+#endif
   va_end(arg_list);
   str = auxPtr;
   free(auxPtr);

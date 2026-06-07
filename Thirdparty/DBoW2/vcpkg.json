@@ -1,0 +1,7 @@
+{
+  "name": "dbow2",
+  "version": "1.0",
+  "dependencies": [
+    "opencv"
+  ]
+}

@@ -67,6 +67,9 @@ int main(int argc, char **argv)
     ORB_SLAM3::System SLAM(argv[1],argv[2],ORB_SLAM3::System::IMU_MONOCULAR, true, 0, file_name);
     float imageScale = SLAM.GetImageScale();
 
+#ifdef _WIN32
+    signal(SIGINT, exit_loop_handler);
+#else
     struct sigaction sigIntHandler;
 
     sigIntHandler.sa_handler = exit_loop_handler;
@@ -74,6 +77,7 @@ int main(int argc, char **argv)
     sigIntHandler.sa_flags = 0;
 
     sigaction(SIGINT, &sigIntHandler, NULL);
+#endif
     b_continue_session = true;
 
     double offset = 0; // ms
@@ -233,7 +237,7 @@ int main(int argc, char **argv)
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point time_Start_Process = std::chrono::steady_clock::now();
 #else
-        std::chrono::monotonic_clock::time_point time_Start_Process = std::chrono::monotonic_clock::now();
+        std::chrono::steady_clock::time_point time_Start_Process = std::chrono::steady_clock::now();
 #endif
 
             if(count_im_buffer>1)
@@ -260,7 +264,7 @@ int main(int argc, char **argv)
         #ifdef COMPILEDWITHC11
                 std::chrono::steady_clock::time_point t_Start_Resize = std::chrono::steady_clock::now();
         #else
-                std::chrono::monotonic_clock::time_point t_Start_Resize = std::chrono::monotonic_clock::now();
+                std::chrono::steady_clock::time_point t_Start_Resize = std::chrono::steady_clock::now();
         #endif
     #endif
                 int width = imCV.cols * imageScale;
@@ -270,7 +274,7 @@ int main(int argc, char **argv)
         #ifdef COMPILEDWITHC11
                 std::chrono::steady_clock::time_point t_End_Resize = std::chrono::steady_clock::now();
         #else
-                std::chrono::monotonic_clock::time_point t_End_Resize = std::chrono::monotonic_clock::now();
+                std::chrono::steady_clock::time_point t_End_Resize = std::chrono::steady_clock::now();
         #endif
                 t_resize = std::chrono::duration_cast<std::chrono::duration<double,std::milli> >(t_End_Resize - t_Start_Resize).count();
                 SLAM.InsertResizeTime(t_resize);
@@ -311,7 +315,7 @@ int main(int argc, char **argv)
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t_Start_Track = std::chrono::steady_clock::now();
 #else
-        std::chrono::monotonic_clock::time_point t_Start_Track = std::chrono::monotonic_clock::now();
+        std::chrono::steady_clock::time_point t_Start_Track = std::chrono::steady_clock::now();
 #endif
         // Pass the image to the SLAM system
         SLAM.TrackMonocular(im, timestamp, vImuMeas);
@@ -319,7 +323,7 @@ int main(int argc, char **argv)
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t_End_Track = std::chrono::steady_clock::now();
 #else
-        std::chrono::monotonic_clock::time_point t_End_Track = std::chrono::monotonic_clock::now();
+        std::chrono::steady_clock::time_point t_End_Track = std::chrono::steady_clock::now();
 #endif
 
 #ifdef REGISTER_TIMES

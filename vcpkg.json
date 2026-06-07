@@ -1,0 +1,12 @@
+{
+  "name": "orbslam",
+  "version": "1.0",
+  "dependencies": [
+    "boost",
+    "eigen3",
+    "opencv",
+    "openssl",
+    "pangolin",
+    "realsense2"
+  ]
+}

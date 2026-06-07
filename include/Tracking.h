@@ -41,6 +41,7 @@
 
 #include <mutex>
 #include <unordered_set>
+#include <string>
 
 namespace ORB_SLAM3
 {
@@ -59,7 +60,7 @@ class Tracking
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Tracking(System* pSys, ORBVocabulary* pVoc, FrameDrawer* pFrameDrawer, MapDrawer* pMapDrawer, Atlas* pAtlas,
-             KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor, Settings* settings, const string &_nameSeq=std::string());
+             KeyFrameDatabase* pKFDB, const std::string &strSettingPath, const int sensor, Settings* settings, const std::string &_nameSeq=std::string());
 
     ~Tracking();
 
@@ -69,9 +70,9 @@ public:
     bool ParseIMUParamFile(cv::FileStorage &fSettings);
 
     // Preprocess the input and call Track(). Extract features and performs stereo matching.
-    Sophus::SE3f GrabImageStereo(const cv::Mat &imRectLeft,const cv::Mat &imRectRight, const double &timestamp, string filename);
-    Sophus::SE3f GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const double &timestamp, string filename);
-    Sophus::SE3f GrabImageMonocular(const cv::Mat &im, const double &timestamp, string filename);
+    Sophus::SE3f GrabImageStereo(const cv::Mat &imRectLeft,const cv::Mat &imRectRight, const double &timestamp, std::string filename);
+    Sophus::SE3f GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const double &timestamp, std::string filename);
+    Sophus::SE3f GrabImageMonocular(const cv::Mat &im, const double &timestamp, std::string filename);
 
     void GrabImuData(const IMU::Point &imuMeasurement);
 
@@ -83,7 +84,7 @@ public:
 
     // Load new settings
     // The focal lenght should be similar or scale prediction will fail when projecting points
-    void ChangeCalibration(const string &strSettingPath);
+    void ChangeCalibration(const std::string &strSettingPath);
 
     // Use this function if you have deactivated local mapping and you only want to localize the camera.
     void InformOnlyTracking(const bool &flag);
@@ -103,8 +104,8 @@ public:
     int GetMatchesInliers();
 
     //DEBUG
-    void SaveSubTrajectory(string strNameFile_frames, string strNameFile_kf, string strFolder="");
-    void SaveSubTrajectory(string strNameFile_frames, string strNameFile_kf, Map* pMap);
+    void SaveSubTrajectory(std::string strNameFile_frames, std::string strNameFile_kf, std::string strFolder="");
+    void SaveSubTrajectory(std::string strNameFile_frames, std::string strNameFile_kf, Map* pMap);
 
     float GetImageScale();
 

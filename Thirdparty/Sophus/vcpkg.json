@@ -1,0 +1,7 @@
+{
+  "name": "Sophus",
+  "version": "1.0",
+  "dependencies": [
+    "eigen3"
+  ]
+}

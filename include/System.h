@@ -20,8 +20,20 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#ifdef _WIN32
+    #ifndef WIN32_LEAN_AND_MEAN
+        #define WIN32_LEAN_AND_MEAN
+    #endif
+    #ifndef NO_RPC
+        #define NO_RPC
+    #endif
+    #define NOMINMAX
+    #include <windows.h>
+    #define usleep(x) Sleep((x)/1000)
+#else
+    #include <unistd.h>
+#endif
 
-#include <unistd.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string>

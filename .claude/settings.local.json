@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmake --build build --clean-first --config Release -j 8)",
+      "Bash(where ninja *)",
+      "Read(//c/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/**)",
+      "Read(//c/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/x64/bin/**)"
+    ]
+  }
+}
